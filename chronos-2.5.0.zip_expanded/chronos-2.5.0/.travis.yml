@@ -1,0 +1,15 @@
+sudo: false
+language: scala
+addons:
+  apt:
+    packages:
+      - nodejs
+install: true # disable travis' default mvn install before running the tests
+scala:
+  - "2.10.4"
+jdk:
+  - openjdk7
+script: mvn clean test package
+cache:
+  directories:
+    - $HOME/.m2/repository

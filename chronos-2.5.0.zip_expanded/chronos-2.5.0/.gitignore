@@ -1,0 +1,16 @@
+.*sw?
+*.iml
+*.log
+.idea/*
+target
+src/main/resources/**/temp
+src/main/resources/**/build
+.DS_Store
+.rvmrc
+node_modules
+src/main/resources/assets/components
+chronos.arx
+chronos.tbz
+.classpath.txt
+dependency-reduced-pom.xml
+.arcconfig
