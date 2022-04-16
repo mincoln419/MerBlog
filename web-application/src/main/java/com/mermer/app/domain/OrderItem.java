@@ -18,6 +18,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.mermer.app.domain.item.Item;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -33,6 +35,8 @@ public class OrderItem {
 	@Column(name = "order_item_id")
 	private Long id;
 	
+	@ManyToOne
+	@JoinColumn(name ="item_id")
 	private Item item;
 	
 	@ManyToOne

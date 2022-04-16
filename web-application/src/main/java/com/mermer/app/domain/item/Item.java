@@ -1,28 +1,32 @@
 /**
- * @packageName : com.mermer.app.domain
+ * @packageName : com.mermer.app.domain.item
  * @fileName : Item.java 
  * @author : Mermer 
- * @date : 2022.04.11 
+ * @date : 2022.04.16 
  * @description :
  * =========================================================== 
  * DATE AUTHOR NOTE 
  * ----------------------------------------------------------- 
- * 2022.04.11 Mermer 최초 생성
+ * 2022.04.16 Mermer 최초 생성
  */
-package com.mermer.app.domain;
+package com.mermer.app.domain.item;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
-import lombok.Builder;
 import lombok.Data;
 
 /* 
  * @description: 
  */
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="dtype")
 @Data
 public abstract class Item {
 
@@ -34,5 +38,7 @@ public abstract class Item {
 	
 	private int price;
 	
-	private int stockQty;
+	private int stockQauntity;
+	
+	
 }
