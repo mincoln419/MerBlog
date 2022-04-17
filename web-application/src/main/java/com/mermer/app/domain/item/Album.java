@@ -11,6 +11,7 @@
  */
 package com.mermer.app.domain.item;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 import lombok.Data;
@@ -19,7 +20,11 @@ import lombok.Data;
  * @description: 
  */
 @Entity
+@DiscriminatorValue("A")
 @Data
-public class Album {
+public class Album extends Item{
 
+	private String artist;
+	
+	private String etc;
 }
