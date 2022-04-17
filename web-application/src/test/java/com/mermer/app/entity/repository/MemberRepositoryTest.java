@@ -21,14 +21,14 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mermer.app.domain.Member;
-import com.mermer.app.jpa.MemberRepository;
+import com.mermer.app.jpa.MemberRepository1;
 
 @SpringBootTest
 @Rollback(false)
 class MemberRepositoryTest {
 
 	@Autowired
-	MemberRepository memberRepository;
+	MemberRepository1 memberRepository;
 	
 	@Test
 	@Transactional

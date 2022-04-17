@@ -18,6 +18,6 @@ import com.mermer.app.domain.Member;
 /* 
  * @description: 
  */
-public interface MemberRepository extends JpaRepository<Member, Long>{
+public interface MemberRepository1 extends JpaRepository<Member, Long>{
 
 }
