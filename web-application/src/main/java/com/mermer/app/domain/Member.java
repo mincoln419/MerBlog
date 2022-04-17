@@ -39,7 +39,7 @@ public class Member {
 	private String name;
 	
 	@Embedded
-	private String address;
+	private Address address;
 	
 	@OneToMany(mappedBy = "member")
 	private List<Order> orders = new ArrayList<Order>();
