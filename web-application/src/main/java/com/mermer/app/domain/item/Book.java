@@ -19,7 +19,6 @@ import lombok.Data;
 /* 
  * @description: 
  */
-@Entity
 @DiscriminatorValue("B")
 @Data
 public class Book extends Item{

@@ -20,6 +20,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +31,7 @@ import lombok.Data;
 @Entity
 @Data
 @Builder
+@Table(name="member")
 public class Member {
 
 	@Id @GeneratedValue
@@ -39,7 +41,7 @@ public class Member {
 	private String name;
 	
 	@Embedded
-	private String address;
+	private Address address;
 	
 	@OneToMany(mappedBy = "member")
 	private List<Order> orders = new ArrayList<Order>();

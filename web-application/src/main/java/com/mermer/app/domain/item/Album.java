@@ -19,7 +19,6 @@ import lombok.Data;
 /* 
  * @description: 
  */
-@Entity
 @DiscriminatorValue("A")
 @Data
 public class Album extends Item{

@@ -16,9 +16,11 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import lombok.Data;
 
@@ -27,13 +29,14 @@ import lombok.Data;
  */
 @Entity
 @Data
+@Table(name ="Delivery")
 public class Delivery {
 
 	@Id @GeneratedValue
 	@Column(name="delivery_id")
 	private Long id;
 	
-	@OneToOne(mappedBy = "delivery")
+	@OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
 	private Order order;
 	
 	@Embedded
