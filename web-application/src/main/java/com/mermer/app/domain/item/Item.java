@@ -22,6 +22,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 import com.mermer.app.domain.Category;
 
@@ -34,6 +35,7 @@ import lombok.Data;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="dtype")
 @Data
+@Table(name="item")
 public abstract class Item {
 
 	@Id @GeneratedValue

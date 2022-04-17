@@ -19,7 +19,6 @@ import lombok.Data;
 /* 
  * @description: 
  */
-@Entity
 @DiscriminatorValue("M")
 @Data
 public class Movie extends Item{

@@ -8,8 +8,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+      naming:        physical-strategy: com.mermer.app.config.CustomPhysicalNamingStrategy   
     properties:
       hibernate.format_sql: true
+    
     
       
     
