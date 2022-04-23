@@ -25,6 +25,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.mermer.app.domain.Category;
+import com.mermer.app.exception.NotEnoughStockException;
 
 import lombok.Data;
 
@@ -50,5 +51,24 @@ public abstract class Item {
 	
 	@ManyToMany(mappedBy = "items")
 	private List<Category> categories = new ArrayList<>();
+	
+	
+	
+	//== 비즈니스 로직 ==//
+	// stock 증가
+	public void addStock(int quantity) {
+		this.stockQauntity += quantity;
+	}
+	
+	// stcok 감소 
+	public void removeStock(int quantity) throws Exception {
+		
+		int restStock = this.stockQauntity - quantity;
+		if(restStock < 0) {
+			throw new NotEnoughStockException("need more stock");
+		}
+		
+	}
+	
 	
 }
