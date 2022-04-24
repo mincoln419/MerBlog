@@ -21,6 +21,7 @@ import lombok.Data;
  */
 @DiscriminatorValue("B")
 @Data
+@Entity
 public class Book extends Item{
 
 	private String author;	

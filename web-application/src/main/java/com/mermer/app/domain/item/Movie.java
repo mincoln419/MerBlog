@@ -21,6 +21,7 @@ import lombok.Data;
  */
 @DiscriminatorValue("M")
 @Data
+@Entity
 public class Movie extends Item{
 
 	private String director;

@@ -13,12 +13,15 @@ package com.mermer.app.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mermer.app.domain.item.Item;
 
@@ -51,7 +54,7 @@ public class OrderItem {
 	private int orderPrice;
 	
 	private int count;
-
+	
 	//== 생성 매서드 ==//
 	public static OrderItem createOrderItem(Item item, int orderPrice, int count) throws Exception {
 		OrderItem orderItem = new OrderItem();
@@ -61,7 +64,6 @@ public class OrderItem {
 		
 		item.removeStock(count);
 		return orderItem;
-		
 	}
 	
 	

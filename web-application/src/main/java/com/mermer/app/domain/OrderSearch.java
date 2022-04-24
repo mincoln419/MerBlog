@@ -1,17 +1,16 @@
 /**
  * @packageName : com.mermer.app.domain
- * @fileName : Album.java 
+ * @fileName : OrderSearch.java 
  * @author : Mermer 
- * @date : 2022.04.11 
+ * @date : 2022.04.24 
  * @description :
  * =========================================================== 
  * DATE AUTHOR NOTE 
  * ----------------------------------------------------------- 
- * 2022.04.11 Mermer 최초 생성
+ * 2022.04.24 Mermer 최초 생성
  */
-package com.mermer.app.domain.item;
+package com.mermer.app.domain;
 
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 import lombok.Data;
@@ -19,12 +18,9 @@ import lombok.Data;
 /* 
  * @description: 
  */
-@DiscriminatorValue("A")
 @Data
-@Entity
-public class Album extends Item{
+public class OrderSearch {
 
-	private String artist;
-	
-	private String etc;
+	private String memberName;
+	private OrderStatus orderStatus;
 }

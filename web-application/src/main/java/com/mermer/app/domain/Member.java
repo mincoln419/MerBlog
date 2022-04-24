@@ -24,13 +24,14 @@ import javax.persistence.Table;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /* 
  * @description: 
  */
 @Entity
 @Data
-@Builder
+@NoArgsConstructor
 @Table(name="member")
 public class Member {
 
