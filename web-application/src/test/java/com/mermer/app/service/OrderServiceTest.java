@@ -12,7 +12,7 @@
 package com.mermer.app.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import javax.persistence.EntityManager;
 
@@ -27,23 +27,27 @@ import com.mermer.app.domain.Member;
 import com.mermer.app.domain.Order;
 import com.mermer.app.domain.OrderStatus;
 import com.mermer.app.domain.item.Book;
-import com.mermer.app.domain.item.Item;
+import com.mermer.app.exception.NotEnoughStockException;
 import com.mermer.app.repository.OrderRepository;
 
 @SpringBootTest
 @Transactional
 class OrderServiceTest {
 
-	@Autowired EntityManager em;
-	
-	@Autowired OrderService orderService;
-	
-	@Autowired OrderRepository orderRepository;
-	
+	@Autowired
+	EntityManager em;
+
+	@Autowired
+	OrderService orderService;
+
+	@Autowired
+	OrderRepository orderRepository;
+
 	/**
 	 * Test method for
 	 * {@link com.mermer.app.service.OrderService#order(java.lang.Long, java.lang.Long, int)}.
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
 	@Test
 	@DisplayName("주문 생성 정상테스트")
@@ -53,7 +57,7 @@ class OrderServiceTest {
 		member.setName("회원1");
 		member.setAddress(new Address("서울", "강가", "123-123"));
 		em.persist(member);
-		
+
 		Book book = new Book();
 		book.setName("시골 JPA");
 		book.setPrice(1000);
@@ -66,17 +70,17 @@ class OrderServiceTest {
 
 		// then
 		Order getOrder = orderRepository.findOne(orderId);
-		
+
 		em.flush();
 		em.close();
-		
-		//"상품 주문시 상태는 order"
+
+		// "상품 주문시 상태는 order"
 		assertThat(getOrder.getStatus()).isEqualTo(OrderStatus.ORDER);
-		//주문한 상품 종류 수가 정확해야 한다.
+		// 주문한 상품 종류 수가 정확해야 한다.
 		assertThat(getOrder.getOrderItems().size()).isEqualTo(1);
-		//주문 가격은 가격 * 수량
+		// 주문 가격은 가격 * 수량
 		assertThat(getOrder.getTotalPrice()).isEqualTo(orderCount * 1000);
-		//주문 수량만큼 재고가 줄어야 한다
+		// 주문 수량만큼 재고가 줄어야 한다
 		assertThat(book.getStockQauntity()).isEqualTo(10 - 2);
 	}
 
@@ -84,24 +88,56 @@ class OrderServiceTest {
 	@DisplayName("재고 초과 주문 오류 테스트")
 	void testOrder_overStock_error() {
 		// given
-
+		Member member = new Member();
+		member.setName("회원1");
+		member.setAddress(new Address("서울", "강가", "123-123"));
+		em.persist(member);
+		
+		Book book = new Book();
+		book.setName("시골 JPA");
+		book.setPrice(1000);
+		book.setStockQauntity(10);
+		em.persist(book);
+	
 		// when
-
-		// test
+		int orderCount = 12;
+	
+		// then
+		assertThatThrownBy(() -> orderService.order(member.getId(), book.getId(), orderCount))
+			.isInstanceOf(NotEnoughStockException.class);
 	}
 
 	/**
 	 * Test method for
 	 * {@link com.mermer.app.service.OrderService#cancelOrder(java.lang.Long)}.
+	 * @throws Exception 
 	 */
 	@Test
 	@DisplayName("주문 취소 정상테스트")
-	void testCancelOrder_success() {
-		//given
+	void testCancelOrder_success() throws Exception {
+		// given
+		// given
+		Member member = new Member();
+		member.setName("회원1");
+		member.setAddress(new Address("서울", "강가", "123-123"));
+		em.persist(member);
+
+		Book book = new Book();
+		book.setName("시골 JPA");
+		book.setPrice(1000);
+		book.setStockQauntity(10);
+		em.persist(book);
+
+		int orderCount = 2;
+		Long orderId = orderService.order(member.getId(), book.getId(), orderCount);
+
+		// when
+		orderService.cancelOrder(orderId);
 		
-		//when
-				
-		//test
+		// then
+		Order getOrder = orderRepository.findOne(orderId);
+		assertThat(getOrder.getStatus()).isEqualTo(OrderStatus.CANCEL);
+		assertThat(book.getStockQauntity()).isEqualTo(10);	
 	}
 
 }
