@@ -47,15 +47,14 @@ class MemberServiceTest {
 	@Rollback(true)
 	public void testJoin_success() {
 		//given
-		Member member = Member.builder()
-				.name("alice")
-				.address(Address.builder()
+		Member member = new Member();
+		member.setName("alice");
+		member.setAddress(Address.builder()
 						.city("Seoul")
 						.street("SeoDeaMoon")
 						.zipcode("112345")
 						.build()
-						)
-				.build();
+						);
 		//when
 		Long savedId = memberService.join(member);
 		em.flush();
@@ -69,25 +68,23 @@ class MemberServiceTest {
 	@DisplayName("회원가입 예외- 회원중복 테스트")
 	public void testJoin_faliure_dup_name() {
 		//given
-		Member member1 = Member.builder()
-				.name("alice")
-				.address(Address.builder()
+		Member member1 = new Member();
+		member1.setName("alice");
+		member1.setAddress(Address.builder()
 						.city("Seoul")
 						.street("SeoDeaMoon")
 						.zipcode("112345")
 						.build()
-						)
-				.build();
+						);
 		
-		Member member2 = Member.builder()
-				.name("alice")
-				.address(Address.builder()
+		Member member2 = new Member();
+		member2.setName("alice");
+		member2.setAddress(Address.builder()
 						.city("Seoul")
 						.street("SeoDeaMoon")
 						.zipcode("112345")
 						.build()
-						)
-				.build();
+						);
 		
 		//when
 		memberService.join(member1);
