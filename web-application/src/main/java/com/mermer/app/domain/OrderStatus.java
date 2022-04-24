@@ -15,5 +15,5 @@ package com.mermer.app.domain;
  * @description: 
  */
 public enum OrderStatus {
-
+	ORDER, CANCEL
 }

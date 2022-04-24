@@ -13,6 +13,7 @@ package com.mermer.app.domain;
 
 import javax.persistence.Embeddable;
 
+import lombok.Builder;
 import lombok.Getter;
 
 /* 
@@ -20,6 +21,7 @@ import lombok.Getter;
  */
 @Embeddable
 @Getter
+@Builder
 public class Address {
 
 	
