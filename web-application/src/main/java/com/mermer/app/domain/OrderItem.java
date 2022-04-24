@@ -22,6 +22,7 @@ import javax.persistence.Table;
 
 import com.mermer.app.domain.item.Item;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,7 +32,7 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Data
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "orderItem")
 public class OrderItem {
 	
@@ -70,12 +71,8 @@ public class OrderItem {
 		getItem().addStock(count);
 	}
 
-	/**
-	 * @method getTotalPrice
-	 * @return
-	 * int
-	 * @description 
-	 */
+	//== 조회 로직 ==/
+	//주문가격 전체 조회
 	public int getTotalPrice() {
 		return getOrderPrice() * getCount();
 	}
