@@ -61,7 +61,7 @@ class OrderServiceTest {
 		Book book = new Book();
 		book.setName("시골 JPA");
 		book.setPrice(1000);
-		book.setStockQauntity(10);
+		book.setStockQuantity(10);
 		em.persist(book);
 
 		// when
@@ -81,7 +81,7 @@ class OrderServiceTest {
 		// 주문 가격은 가격 * 수량
 		assertThat(getOrder.getTotalPrice()).isEqualTo(orderCount * 1000);
 		// 주문 수량만큼 재고가 줄어야 한다
-		assertThat(book.getStockQauntity()).isEqualTo(10 - 2);
+		assertThat(book.getStockQuantity()).isEqualTo(10 - 2);
 	}
 
 	@Test
@@ -96,7 +96,7 @@ class OrderServiceTest {
 		Book book = new Book();
 		book.setName("시골 JPA");
 		book.setPrice(1000);
-		book.setStockQauntity(10);
+		book.setStockQuantity(10);
 		em.persist(book);
 	
 		// when
@@ -125,7 +125,7 @@ class OrderServiceTest {
 		Book book = new Book();
 		book.setName("시골 JPA");
 		book.setPrice(1000);
-		book.setStockQauntity(10);
+		book.setStockQuantity(10);
 		em.persist(book);
 
 		int orderCount = 2;
@@ -137,7 +137,7 @@ class OrderServiceTest {
 		// then
 		Order getOrder = orderRepository.findOne(orderId);
 		assertThat(getOrder.getStatus()).isEqualTo(OrderStatus.CANCEL);
-		assertThat(book.getStockQauntity()).isEqualTo(10);	
+		assertThat(book.getStockQuantity()).isEqualTo(10);	
 	}
 
 }

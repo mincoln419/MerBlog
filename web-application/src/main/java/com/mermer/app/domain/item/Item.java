@@ -47,7 +47,7 @@ public abstract class Item {
 	
 	private int price;
 	
-	private int stockQauntity;
+	private int stockQuantity;
 	
 	@ManyToMany(mappedBy = "items")
 	private List<Category> categories = new ArrayList<>();
@@ -57,17 +57,17 @@ public abstract class Item {
 	//== 비즈니스 로직 ==//
 	// stock 증가
 	public void addStock(int quantity) {
-		this.stockQauntity += quantity;
+		this.stockQuantity += quantity;
 	}
 	
 	// stcok 감소 
 	public void removeStock(int quantity) throws Exception {
 		
-		int restStock = this.stockQauntity - quantity;
+		int restStock = this.stockQuantity - quantity;
 		if(restStock < 0) {
 			throw new NotEnoughStockException("need more stock");
 		}
-		this.stockQauntity = restStock;
+		this.stockQuantity = restStock;
 	}
 	
 	
