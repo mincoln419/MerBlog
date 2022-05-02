@@ -80,7 +80,7 @@ class OrderRepositoryTest {
 		Book book = new Book();
 		book.setName("시골 JPA");
 		book.setPrice(1000);
-		book.setStockQauntity(10);
+		book.setStockQuantity(10);
 		em.persist(book);
 
 		// when
@@ -122,7 +122,7 @@ class OrderRepositoryTest {
 		Book book = new Book();
 		book.setName("시골 JPA");
 		book.setPrice(1000);
-		book.setStockQauntity(10);
+		book.setStockQuantity(10);
 		em.persist(book);
 
 		// when
