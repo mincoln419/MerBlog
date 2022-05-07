@@ -54,7 +54,7 @@ public class MemberController {
 				 .zipcode(form.getZipcode())
 				 .build();
 		Member member = new Member();
-		member.setName("alice");
+		member.setName(form.getName());
 		member.setAddress(address);
 		
 		memberService.join(member);

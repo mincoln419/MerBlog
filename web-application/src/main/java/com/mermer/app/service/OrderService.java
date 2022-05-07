@@ -20,6 +20,7 @@ import com.mermer.app.domain.Delivery;
 import com.mermer.app.domain.Member;
 import com.mermer.app.domain.Order;
 import com.mermer.app.domain.OrderItem;
+import com.mermer.app.domain.OrderSearch;
 import com.mermer.app.domain.item.Item;
 import com.mermer.app.repository.ItemRepository;
 import com.mermer.app.repository.MemberRepository;
@@ -77,8 +78,8 @@ public class OrderService {
 	}
 	
 	//검색
-//	public List<Order> findOrders(OrderSearch orderSearch){
-//		return orderRepository.findAll(orderSearch);
-//	}
+	public List<Order> findOrders(OrderSearch orderSearch){
+		return orderRepository.findAllByString(orderSearch);
+	}
 }
 
