@@ -34,12 +34,7 @@ public class ItemUpdateTest {
 		//TX
 		book.setName("asdfsdf");
 		
-		//변경감지 = dirty checking
-		//TX commit;
-		
-		//준영속 엔티티? - 영속성 컨텍스트가 더는 관리하지 않는 엔티티
-		//dirty checking 을 하지 않는다
-		//-> merge를 사용해서 TX 처리해야한다.
+
 		
 		
 		
