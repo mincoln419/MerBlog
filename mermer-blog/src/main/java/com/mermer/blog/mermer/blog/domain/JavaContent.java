@@ -33,6 +33,6 @@ public class JavaContent {
 	
 	private LocalDateTime updated_at;
 	
-	@OneToMany(mappedBy = "file", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "content", cascade = CascadeType.ALL)
 	private List<UploadFile> files;
 }
