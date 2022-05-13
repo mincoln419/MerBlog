@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -66,5 +67,11 @@ public class OrderController {
 		List<Order> orders =  orderService.findOrders(orderSearch);
 		model.addAttribute("orders", orders);
 		return "order/orderList";	
+	}
+	
+	@PostMapping("/orders/{orderId}/cancel")
+	public String cancelOrder(@PathVariable("orderId") Long orderId) throws Exception {
+		orderService.cancelOrder(orderId);
+		return "redirect:/orders";
 	}
 }
