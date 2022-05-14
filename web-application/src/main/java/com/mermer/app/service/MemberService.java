@@ -62,5 +62,24 @@ public class MemberService {
 	public Member findOne(Long memberId) {
 		return memberRepository.findOne(memberId);
 	}
+
+	/**
+	 * @method update
+	 * @param id
+	 * @param name
+	 * @return
+	 * Long
+	 * @description 
+	 */
+	@Transactional
+	public void update(Long id, String name) {
+		
+		Member member = new Member();
+		member.setName(name);
+		validateDuplicateMember(member); //중복회원 검증				
+		member = memberRepository.findOne(id);
+		member.setName(name);
+		
+	}
 	
 }
