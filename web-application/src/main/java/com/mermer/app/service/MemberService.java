@@ -54,6 +54,7 @@ public class MemberService {
 	}
 	
 	/* 전체회원 조회 */
+	@Transactional(readOnly = true)
 	public List<Member> findMembers(){
 		return memberRepository.findAll();
 	}
