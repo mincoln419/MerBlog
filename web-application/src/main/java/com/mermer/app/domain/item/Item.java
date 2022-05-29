@@ -24,6 +24,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.BatchSize;
+
 import com.mermer.app.domain.Category;
 import com.mermer.app.exception.NotEnoughStockException;
 
@@ -32,6 +34,7 @@ import lombok.Data;
 /* 
  * @description: 
  */
+@BatchSize(size = 100)
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="dtype")
