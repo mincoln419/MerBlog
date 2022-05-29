@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mermer.app.api.dto.OrderSimpleQueryDto;
 import com.mermer.app.domain.Address;
 import com.mermer.app.domain.Order;
 import com.mermer.app.domain.OrderSearch;
@@ -61,7 +62,7 @@ public class OrderSimpleApiController {
 				.collect(Collectors.toList());
 	}
 	
-	
+	//여러 기능에서 재활용하여 사용하기 수월
 	@GetMapping("/api/v3/simple-orders")
 	public List<SimpleOrderDto> ordersV3(){
 		List<Order> orders = orderRepository.findAllWithMemberDelivery();
@@ -69,8 +70,19 @@ public class OrderSimpleApiController {
 				.map(SimpleOrderDto::new)
 				.collect(Collectors.toList());
 	}
-	
-	
+	//v3와 v4 는 트레이드 오프 관계 - 우열을 가리기 어렵다
+	//v4는 재사용성이 적음
+	//v4가 좀더 성능 최적화가 좋음
+	//v4는 entity가 아니어서 영속성 컨텍스트를 사용할 수 없음
+	//v4 api 스펙이 바뀌면 로직을 뜯어고쳐야하는 문제 발생
+	//근데 정작 성능 문제 개선은 fetch 조인으로 해결할 수 있는 것이라서.. 그닥..
+	//v3면 충분하다
+	@GetMapping("/api/v4/simple-orders")
+	public List<OrderSimpleQueryDto> ordersV4(){
+		List<OrderSimpleQueryDto> orderDtos = orderRepository.findOrderDtos();
+		return orderDtos.stream()
+				.collect(Collectors.toList());
+	}
 	
 	@Data
 	static class SimpleOrderDto{

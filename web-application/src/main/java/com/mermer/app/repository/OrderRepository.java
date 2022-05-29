@@ -26,6 +26,8 @@ import javax.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import com.mermer.app.api.OrderSimpleApiController;
+import com.mermer.app.api.dto.OrderSimpleQueryDto;
 import com.mermer.app.domain.Order;
 import com.mermer.app.domain.OrderSearch;
 
@@ -136,6 +138,16 @@ public class OrderRepository {
 						"join fetch o.member m "+
 						"join fetch o.delivery d", Order.class
 				).getResultList();
+	}
+
+	public List<OrderSimpleQueryDto> findOrderDtos() {
+
+		return em.createQuery("select new com.mermer.app.api.dto.OrderSimpleQueryDto(o.id, m.name, o.orderDate, o.status, d.address) " +
+							  "from Order o "+
+							  "join o.member m "+
+							  "join o.delivery d", OrderSimpleQueryDto.class
+				).getResultList()
+				;
 	}
 	
 }
