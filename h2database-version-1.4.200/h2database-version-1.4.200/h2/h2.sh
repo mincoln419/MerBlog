@@ -1,1 +1,0 @@
-java -jar ./target/h2-1.4.201-SNAPSHOT.jar
