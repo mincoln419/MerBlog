@@ -274,3 +274,4 @@ thumb
 sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/java,maven,node,react,nextjs,eclipse
+/h2database-master.zip_expanded/

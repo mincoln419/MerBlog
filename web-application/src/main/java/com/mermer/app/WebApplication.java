@@ -2,6 +2,9 @@ package com.mermer.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 
 @SpringBootApplication
 public class WebApplication {
@@ -10,4 +13,12 @@ public class WebApplication {
 		SpringApplication.run(WebApplication.class, args);
 	}
 	
+	
+	@Bean
+	public Hibernate5Module hibernate5Module() {
+		Hibernate5Module module =  new Hibernate5Module();
+		//이거는 쓰면 안된다...
+		//module.configure(Hibernate5Module.Feature.FORCE_LAZY_LOADING, true);
+		return module;
+	}
 }
