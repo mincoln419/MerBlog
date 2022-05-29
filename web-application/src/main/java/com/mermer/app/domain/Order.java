@@ -30,6 +30,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.BatchSize;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -52,6 +54,7 @@ public class Order {
 	@JoinColumn(name = "member_id")
 	private Member member;
 	
+	@BatchSize(size = 100)
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<OrderItem> orderItems = new ArrayList<>();
 	
