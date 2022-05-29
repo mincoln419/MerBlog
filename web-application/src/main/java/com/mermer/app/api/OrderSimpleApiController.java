@@ -23,7 +23,6 @@ import com.mermer.app.domain.Order;
 import com.mermer.app.domain.OrderSearch;
 import com.mermer.app.domain.OrderStatus;
 import com.mermer.app.repository.OrderRepository;
-import com.mermer.app.service.OrderService;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -63,14 +62,24 @@ public class OrderSimpleApiController {
 	}
 	
 	
+	@GetMapping("/api/v3/simple-orders")
+	public List<SimpleOrderDto> ordersV3(){
+		List<Order> orders = orderRepository.findAllWithMemberDelivery();
+		return orders.stream()
+				.map(SimpleOrderDto::new)
+				.collect(Collectors.toList());
+	}
+	
+	
+	
 	@Data
 	static class SimpleOrderDto{
 		public SimpleOrderDto(Order order) {
 			orderId = order.getId();
-			name = order.getMember().getName();
+			name = order.getMember().getName();//LAZY 초기화 
 			orderDate = order.getOrderDate();
 			orderStatus = order.getStatus();
-			address = order.getDelivery().getAddress();
+			address = order.getDelivery().getAddress();//LAZY 초기화
 		}
 		private Long orderId;
 		private String name;

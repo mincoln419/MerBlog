@@ -6,13 +6,12 @@ spring:
     driver-class-name: org.h2.Driver
     
   jpa:
+    show-sql: true
     hibernate:
       ddl-auto: none
       naming:        physical-strategy: com.mermer.app.config.CustomPhysicalNamingStrategy   
     properties:
       hibernate.format_sql: true
-    
-    
       
     
          
@@ -21,7 +20,6 @@ spring:
 logging:
   level:
     '[org.hibernate.sql]': debug
-    '[org.hibernate.type]': trace
     
 
 
