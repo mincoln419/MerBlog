@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mermer.app.api.dto.OrderQueryDto;
 import com.mermer.app.domain.Address;
 import com.mermer.app.domain.Order;
 import com.mermer.app.domain.OrderItem;
 import com.mermer.app.domain.OrderSearch;
 import com.mermer.app.domain.OrderStatus;
+import com.mermer.app.repository.OrderQueryRepository;
 import com.mermer.app.repository.OrderRepository;
 
 import lombok.Data;
@@ -23,6 +25,8 @@ import lombok.RequiredArgsConstructor;
 public class OrderApiController {
 
 	private final OrderRepository orderRepository;
+	
+	private final OrderQueryRepository orderQueryRepository;
 	
 	@GetMapping("/api/v1/orders")
 	public List<Order> ordersV1(){
@@ -64,6 +68,14 @@ public class OrderApiController {
 		List<Order> orders = orderRepository.findAllWithMemberDelivery(offset, limit);
 		//초기화
 		return orders.stream().map(OrderDto::new).collect(Collectors.toList());
+	} 
+	
+	@GetMapping("/api/v4/orders")
+	public List<OrderQueryDto> ordersV4(@RequestParam(value = "offset", defaultValue = "0") int offset,
+			@RequestParam(value = "limit", defaultValue = "100") int limit
+			){
+	
+		return null;
 	} 
 	
 	@Data
