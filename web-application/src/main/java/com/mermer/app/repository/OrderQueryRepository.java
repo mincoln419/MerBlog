@@ -1,6 +1,8 @@
 package com.mermer.app.repository;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 
@@ -25,10 +27,27 @@ public class OrderQueryRepository {
 		});
 		return result;
 	}
+	
+	public List<OrderQueryDto> findAllByDto_optimization() {
+		List<OrderQueryDto> result = findOrders();
+		
+		List<Long> orderIds = result.stream().map(o -> o.getOrderId()).collect(Collectors.toList());
+		
+		List<OrderItemQueryDto> orderItems = em.createQuery(
+				"select new com.mermer.app.api.dto.OrderItemQueryDto(oi.order.id, i.name, oi.orderPrice, oi.count)"
+						+ " from OrderItem oi" 
+						+ " join oi.item i" 
+						+ " where oi.order.id in :orderIds",
+				OrderItemQueryDto.class).setParameter("orderIds", orderIds).getResultList();
+		
+		Map<Object, List<OrderItemQueryDto>> orderItemMap = orderItems.stream().collect(Collectors.groupingBy(orderItemQueryDto -> orderItemQueryDto.getOrderId()));
+		result.forEach(o -> o.setOrderItems(orderItemMap.get(o.getOrderId())));
+		return result;
+	}
 
 	private List<OrderItemQueryDto> findOrderitems(Long orderId) {
 		return em.createQuery(
-				"select new new com.mermer.app.api.dto.OrderItemQueryDto(o.order.id, i.name, oi.orderPrice, oi.count)"
+				"select new com.mermer.app.api.dto.OrderItemQueryDto(oi.order.id, i.name, oi.orderPrice, oi.count)"
 						+ " from OrderItem oi" 
 						+ " join oi.item i" 
 						+ " where oi.order.id = :orderId",
@@ -37,12 +56,19 @@ public class OrderQueryRepository {
 
 	public List<OrderQueryDto> findOrders() {
 		return em.createQuery(
-				"select new com.mermer.app.api.dto.OrderQueryDto(o.id, m.name, o.orderDto, o.status, d.address) "
+				"select new com.mermer.app.api.dto.OrderQueryDto(o.id, m.name, o.orderDate, o.status, d.address) "
 						+ "from Order o " 
 						+ "join o.member m " 
 						+ "join o.delivery d ",
 				OrderQueryDto.class).getResultList();
 
 	}
+
+	public List<OrderQueryDto> findAllByDto_flat() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 }
