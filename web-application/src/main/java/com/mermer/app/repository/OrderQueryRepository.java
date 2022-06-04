@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
 
+import com.mermer.app.api.dto.OrderFlatDto;
 import com.mermer.app.api.dto.OrderItemQueryDto;
 import com.mermer.app.api.dto.OrderQueryDto;
 
@@ -64,9 +65,16 @@ public class OrderQueryRepository {
 
 	}
 
-	public List<OrderQueryDto> findAllByDto_flat() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<OrderFlatDto> findAllByDto_flat() {
+
+		return em.createQuery("select new"
+				+ " com.mermer.app.api.dto.OrderFlatDto(o.id, m.name, o.orderDate, o.status, d.address, i.name, oi.orderPrice, oi.count) "
+				+ " from Order o"
+				+ " join o.member m"
+				+ " join o.delivery d"
+				+ " join o.orderItems oi"
+				+ " join oi.item i", OrderFlatDto.class)
+		.getResultList();
 	}
 
 

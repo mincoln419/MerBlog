@@ -23,7 +23,7 @@ import com.mermer.app.domain.OrderItem;
 import com.mermer.app.domain.OrderSearch;
 import com.mermer.app.domain.item.Item;
 import com.mermer.app.repository.ItemRepository;
-import com.mermer.app.repository.MemberRepository;
+import com.mermer.app.repository.MemberRepositoryOld;
 import com.mermer.app.repository.OrderRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -38,7 +38,7 @@ public class OrderService {
 
 	private final OrderRepository orderRepository;
 	
-	private final MemberRepository memberRepository;
+	private final MemberRepositoryOld memberRepository;
 	
 	private final ItemRepository itemRepository;
 	

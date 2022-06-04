@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mermer.app.domain.Member;
 import com.mermer.app.repository.MemberRepository;
+import com.mermer.app.repository.MemberRepositoryOld;
 
 import lombok.RequiredArgsConstructor;
 
@@ -61,7 +62,7 @@ public class MemberService {
 	
 	/* 전체회원 단건조회 */
 	public Member findOne(Long memberId) {
-		return memberRepository.findOne(memberId);
+		return memberRepository.findById(memberId).get();
 	}
 
 	/**
@@ -78,7 +79,7 @@ public class MemberService {
 		Member member = new Member();
 		member.setName(name);
 		validateDuplicateMember(member); //중복회원 검증				
-		member = memberRepository.findOne(id);
+		member = memberRepository.findById(id).get();
 		member.setName(name);
 		
 	}

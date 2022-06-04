@@ -25,14 +25,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mermer.app.domain.Address;
 import com.mermer.app.domain.Member;
-import com.mermer.app.repository.MemberRepository;
+import com.mermer.app.repository.MemberRepositoryOld;
 
 @SpringBootTest
 @Transactional
 class MemberServiceTest {
 
 	@Autowired
-	private MemberRepository memberRepository;
+	private MemberRepositoryOld memberRepository;
 	
 	@Autowired
 	private MemberService memberService;
@@ -111,7 +111,7 @@ class MemberServiceTest {
 	}
 
 	/**
-	 * Test method for {@link com.mermer.app.service.MemberService#MemberService(MemberRepository)}.
+	 * Test method for {@link com.mermer.app.service.MemberService#MemberService(MemberRepositoryOld)}.
 	 */
 	@Test
 	public void testMemberService() {
