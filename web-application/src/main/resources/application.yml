@@ -10,10 +10,12 @@ spring:
     hibernate:
       ddl-auto: none
       naming:        physical-strategy: com.mermer.app.config.CustomPhysicalNamingStrategy   
+    open-in-view: false
     properties:
       hibernate:
          format_sql: true
          default_batch_fetch_size: 100
+    
       
     
          
