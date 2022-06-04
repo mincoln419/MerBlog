@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mermer.app.api.dto.OrderFlatDto;
 import com.mermer.app.api.dto.OrderQueryDto;
 import com.mermer.app.domain.Address;
 import com.mermer.app.domain.Order;
@@ -82,6 +83,13 @@ public class OrderApiController {
 			@RequestParam(value = "limit", defaultValue = "100") int limit
 			){
 		return orderQueryRepository.findAllByDto_optimization();
+	} 
+	
+	@GetMapping("/api/v6/orders")
+	public List<OrderFlatDto> ordersV6(@RequestParam(value = "offset", defaultValue = "0") int offset,
+			@RequestParam(value = "limit", defaultValue = "100") int limit
+			){
+		return orderQueryRepository.findAllByDto_flat();
 	} 
 	
 	@Data

@@ -7,8 +7,10 @@ import com.mermer.app.domain.Address;
 import com.mermer.app.domain.OrderStatus;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(of = "orderId")
 public class OrderQueryDto {
 
 	private Long orderId;

@@ -5,9 +5,11 @@ import java.time.LocalDateTime;
 import com.mermer.app.domain.Address;
 import com.mermer.app.domain.OrderStatus;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class OrderFlatDto {
 	private Long orderId;
 	private String name;
