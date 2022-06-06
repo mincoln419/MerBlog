@@ -9,5 +9,7 @@ import com.mermer.app.domain.Member;
 public interface MemberRepository extends JpaRepository<Member, Long>{
 
 	public List<Member> findByName(String name);
+
+	public List<Member> findByNameAndAgeGreaterThan(String name, int age);
 	
 }

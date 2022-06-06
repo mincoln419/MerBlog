@@ -16,6 +16,7 @@ import org.springframework.test.annotation.Rollback;
 import com.mermer.app.domain.Member;
 import com.mermer.app.domain.Team;
 import com.mermer.app.repository.MemberJpaRepository;
+import com.mermer.app.repository.MemberRepository;
 
 @SpringBootTest
 @Transactional
@@ -28,6 +29,8 @@ class MemberTest {
 	@Autowired
 	MemberJpaRepository memberJpaRepository;
 	
+	@Autowired
+	MemberRepository memberRepository;
 	
 	@Test
 	void testEntity() {
@@ -82,7 +85,23 @@ class MemberTest {
 		assertThat(findMember2).isEqualTo(member2);
 		
 		assertThat(memberJpaRepository.count()).isEqualTo(memberJpaRepository.findAll().size());
+		
+		//삭제검증
+		memberJpaRepository.delete(member1.getId());
+		memberJpaRepository.delete(member2.getId());
 
 	}
 
+	
+	@Test
+	public void findNameAndGraterThen_Test() {
+		
+		Member member1 = new Member("AAA", 10, null);
+		Member member2 = new Member("AAA", 20, null);
+		memberRepository.save(member1);
+		memberRepository.save(member2);
+		List<Member> members = memberRepository.findByNameAndAgeGreaterThan("AAA", 9);
+		assertThat(members.size()).isEqualTo(2);
+	}
+	
 }
