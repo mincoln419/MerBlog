@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.mermer.app.domain.Team;
 
 @Repository
-public class TeamRepository {
+public class TeamJpaRepository {
 
 	@PersistenceContext
 	private EntityManager em;
