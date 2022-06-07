@@ -15,6 +15,7 @@ spring:
       naming:        physical-strategy: com.mermer.app.config.CustomPhysicalNamingStrategy   
     properties:
       hibernate.format_sql: true
+      
     
         
 logging:

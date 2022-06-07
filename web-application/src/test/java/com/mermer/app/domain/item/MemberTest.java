@@ -187,4 +187,26 @@ class MemberTest {
 		if(findMemberOptional.isPresent())
 			assertThat(findMemberOptional.get()).isEqualTo(member2);
 	}
+	
+	@Test
+	public void test_page_jpa() {
+		Member member1 = new Member("AAA", 10, null);
+		Member member2 = new Member("BBB", 20, null);
+		Member member3 = new Member("CCC", 10, null);
+		memberRepository.save(member1);
+		memberRepository.save(member2);
+		memberRepository.save(member3);
+		
+		int age = 10;
+		int offset = 0;
+		int limit = 1;
+		
+		List<Member> memberNames = memberJpaRepository.findByPage(age, offset, limit);
+		assertThat(memberNames.size()).isEqualTo(1);
+		assertThat(memberNames.get(0).getName()).isEqualTo(member3.getName());
+		
+		long count = memberJpaRepository.totalCount(age);
+		assertThat(count).isEqualTo(2);
+		
+	}
 }
