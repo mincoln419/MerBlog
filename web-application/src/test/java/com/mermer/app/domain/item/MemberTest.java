@@ -104,4 +104,14 @@ class MemberTest {
 		assertThat(members.size()).isEqualTo(2);
 	}
 	
+	@Test
+	public void findMembers_test_namedQuery() {
+		Member member1 = new Member("BBB", 10, null);
+		Member member2 = new Member("BBB", 20, null);
+		memberRepository.save(member1);
+		memberRepository.save(member2);
+		List<Member> members = memberRepository.findByUserName2("BBB");
+		assertThat(members.size()).isEqualTo(2);
+	}
+	
 }

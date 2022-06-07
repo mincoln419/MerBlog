@@ -44,4 +44,12 @@ public class MemberJpaRepository {
 	public void delete(Long id) {
 		em.remove(id);
 	}
+	
+	public List<Member> findMembers(String name){
+		return em.createNamedQuery("Member.findByName", Member.class)
+				.setParameter("name", name)
+				.getResultList();
+	}
 }
+
+
