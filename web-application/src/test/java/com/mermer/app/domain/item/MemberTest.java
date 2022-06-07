@@ -2,7 +2,9 @@ package com.mermer.app.domain.item;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -154,5 +156,35 @@ class MemberTest {
 		assertThat(memberNames.size()).isEqualTo(2);
 	}
 	
+
+	@Test
+	public void findNameList_test_repositoryMethodQuery_withCollection() {
+		Member member1 = new Member("AAA", 10, null);
+		Member member2 = new Member("BBB", 20, null);
+		memberRepository.save(member1);
+		memberRepository.save(member2);
+		List<String> names = Arrays.asList("AAA", "BBB");
+		List<Member> memberNames = memberRepository.findByNames(names);
+		assertThat(memberNames.size()).isEqualTo(2);
+	}
 	
+	
+	@Test
+	public void test_returnType() {
+		Member member1 = new Member("AAA", 10, null);
+		Member member2 = new Member("BBB", 20, null);
+		Member member3 = new Member("AAA", 10, null);
+		memberRepository.save(member1);
+		memberRepository.save(member2);
+		memberRepository.save(member3);
+		List<Member> memberNames = memberRepository.findUserListByName("AAA");
+		assertThat(memberNames.size()).isEqualTo(2);
+		
+		Member findMember = memberRepository.findMemberByName("BBB");
+		assertThat(findMember).isEqualTo(member2);
+		
+		Optional<Member> findMemberOptional = memberRepository.findOptionalMemberByName("BBB");
+		if(findMemberOptional.isPresent())
+			assertThat(findMemberOptional.get()).isEqualTo(member2);
+	}
 }

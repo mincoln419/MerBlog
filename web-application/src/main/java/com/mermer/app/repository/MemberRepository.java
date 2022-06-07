@@ -1,6 +1,7 @@
 package com.mermer.app.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,5 +27,12 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 	
 	@Query("select new com.mermer.app.domain.MemberDto(m.id, m.name, t.name) from Member m join m.team t")
 	List<MemberDto> findMemberDto();
+	
+	@Query("select m from Member m where m.name in :names")
+	List<Member> findByNames(@Param("names") List<String> names);
+	
+	List<Member> findUserListByName(String name);
+	Member findMemberByName(String name);
+	Optional<Member> findOptionalMemberByName(String name);
 	
 }
