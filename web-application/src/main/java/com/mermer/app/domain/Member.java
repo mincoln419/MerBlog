@@ -21,6 +21,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
@@ -41,6 +42,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @Table(name="member")
 @ToString(of = {"id", "name", "age"})
+@NamedQuery(name = "Member.findByName",
+			query="select m from Member m where m.name =:name"
+		)
 public class Member {
 
 	@Id @GeneratedValue
