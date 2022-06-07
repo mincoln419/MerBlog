@@ -14,9 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
 import com.mermer.app.domain.Member;
+import com.mermer.app.domain.MemberDto;
 import com.mermer.app.domain.Team;
 import com.mermer.app.repository.MemberJpaRepository;
 import com.mermer.app.repository.MemberRepository;
+import com.mermer.app.repository.TeamJpaRepository;
 
 @SpringBootTest
 @Transactional
@@ -31,6 +33,9 @@ class MemberTest {
 	
 	@Autowired
 	MemberRepository memberRepository;
+	
+	@Autowired
+	TeamJpaRepository teamJpaRepository;
 	
 	@Test
 	void testEntity() {
@@ -113,5 +118,41 @@ class MemberTest {
 		List<Member> members = memberRepository.findByUserName2("BBB");
 		assertThat(members.size()).isEqualTo(2);
 	}
+	
+	
+	@Test
+	public void findMembers_test_repositoryMethodQuery() {
+		Member member1 = new Member("CCC", 10, null);
+		Member member2 = new Member("CCC", 20, null);
+		memberRepository.save(member1);
+		memberRepository.save(member2);
+		List<Member> members = memberRepository.findByUserName3("CCC", 9);
+		assertThat(members.size()).isEqualTo(2);
+	}
+
+	@Test
+	public void findNameList_test_repositoryMethodQuery() {
+		Member member1 = new Member("AAA", 10, null);
+		Member member2 = new Member("BBB", 20, null);
+		memberRepository.save(member1);
+		memberRepository.save(member2);
+		List<String> memberNames = memberRepository.findNameList();
+		assertThat(memberNames.size()).isEqualTo(2);
+	}
+	
+	@Test
+	public void findMemberDto() {
+		Team teamA = new Team("teamA");
+		Team teamB = new Team("teamB");
+		teamJpaRepository.save(teamA);
+		teamJpaRepository.save(teamB);
+		Member member1 = new Member("AAA", 10, teamA);
+		Member member2 = new Member("BBB", 20, teamB);
+		memberRepository.save(member1);
+		memberRepository.save(member2);
+		List<MemberDto> memberNames = memberRepository.findMemberDto();
+		assertThat(memberNames.size()).isEqualTo(2);
+	}
+	
 	
 }
