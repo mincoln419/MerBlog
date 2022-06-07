@@ -2,7 +2,9 @@ package com.mermer.app.domain.item;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,9 +16,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
 import com.mermer.app.domain.Member;
+import com.mermer.app.domain.MemberDto;
 import com.mermer.app.domain.Team;
 import com.mermer.app.repository.MemberJpaRepository;
 import com.mermer.app.repository.MemberRepository;
+import com.mermer.app.repository.TeamJpaRepository;
 
 @SpringBootTest
 @Transactional
@@ -31,6 +35,9 @@ class MemberTest {
 	
 	@Autowired
 	MemberRepository memberRepository;
+	
+	@Autowired
+	TeamJpaRepository teamJpaRepository;
 	
 	@Test
 	void testEntity() {
@@ -114,4 +121,92 @@ class MemberTest {
 		assertThat(members.size()).isEqualTo(2);
 	}
 	
+	
+	@Test
+	public void findMembers_test_repositoryMethodQuery() {
+		Member member1 = new Member("CCC", 10, null);
+		Member member2 = new Member("CCC", 20, null);
+		memberRepository.save(member1);
+		memberRepository.save(member2);
+		List<Member> members = memberRepository.findByUserName3("CCC", 9);
+		assertThat(members.size()).isEqualTo(2);
+	}
+
+	@Test
+	public void findNameList_test_repositoryMethodQuery() {
+		Member member1 = new Member("AAA", 10, null);
+		Member member2 = new Member("BBB", 20, null);
+		memberRepository.save(member1);
+		memberRepository.save(member2);
+		List<String> memberNames = memberRepository.findNameList();
+		assertThat(memberNames.size()).isEqualTo(2);
+	}
+	
+	@Test
+	public void findMemberDto() {
+		Team teamA = new Team("teamA");
+		Team teamB = new Team("teamB");
+		teamJpaRepository.save(teamA);
+		teamJpaRepository.save(teamB);
+		Member member1 = new Member("AAA", 10, teamA);
+		Member member2 = new Member("BBB", 20, teamB);
+		memberRepository.save(member1);
+		memberRepository.save(member2);
+		List<MemberDto> memberNames = memberRepository.findMemberDto();
+		assertThat(memberNames.size()).isEqualTo(2);
+	}
+	
+
+	@Test
+	public void findNameList_test_repositoryMethodQuery_withCollection() {
+		Member member1 = new Member("AAA", 10, null);
+		Member member2 = new Member("BBB", 20, null);
+		memberRepository.save(member1);
+		memberRepository.save(member2);
+		List<String> names = Arrays.asList("AAA", "BBB");
+		List<Member> memberNames = memberRepository.findByNames(names);
+		assertThat(memberNames.size()).isEqualTo(2);
+	}
+	
+	
+	@Test
+	public void test_returnType() {
+		Member member1 = new Member("AAA", 10, null);
+		Member member2 = new Member("BBB", 20, null);
+		Member member3 = new Member("AAA", 10, null);
+		memberRepository.save(member1);
+		memberRepository.save(member2);
+		memberRepository.save(member3);
+		List<Member> memberNames = memberRepository.findUserListByName("AAA");
+		assertThat(memberNames.size()).isEqualTo(2);
+		
+		Member findMember = memberRepository.findMemberByName("BBB");
+		assertThat(findMember).isEqualTo(member2);
+		
+		Optional<Member> findMemberOptional = memberRepository.findOptionalMemberByName("BBB");
+		if(findMemberOptional.isPresent())
+			assertThat(findMemberOptional.get()).isEqualTo(member2);
+	}
+	
+	@Test
+	public void test_page_jpa() {
+		Member member1 = new Member("AAA", 10, null);
+		Member member2 = new Member("BBB", 20, null);
+		Member member3 = new Member("CCC", 10, null);
+		memberRepository.save(member1);
+		memberRepository.save(member2);
+		memberRepository.save(member3);
+		
+		int age = 10;
+		int offset = 0;
+		int limit = 1;
+		
+		List<Member> memberNames = memberJpaRepository.findByPage(age, offset, limit);
+		assertThat(memberNames.size()).isEqualTo(1);
+		assertThat(memberNames.get(0).getName()).isEqualTo(member3.getName());
+		
+		long count = memberJpaRepository.totalCount(age);
+		assertThat(count).isEqualTo(2);
+		
+	}
 }
