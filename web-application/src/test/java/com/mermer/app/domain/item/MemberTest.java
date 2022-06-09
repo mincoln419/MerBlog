@@ -24,7 +24,7 @@ import com.mermer.app.repository.TeamJpaRepository;
 
 @SpringBootTest
 @Transactional
-@Rollback(false)
+@Rollback(true)
 class MemberTest {
 
 	@PersistenceContext
@@ -208,5 +208,20 @@ class MemberTest {
 		long count = memberJpaRepository.totalCount(age);
 		assertThat(count).isEqualTo(2);
 		
+	}
+	
+	@Test
+	public void bulkAgePlus_test(){
+		memberJpaRepository.save(new Member("member1", 10, null));
+		memberJpaRepository.save(new Member("member1", 20, null));
+		memberJpaRepository.save(new Member("member1", 30, null));
+		memberJpaRepository.save(new Member("member1", 40, null));
+		memberJpaRepository.save(new Member("member1", 50, null));
+		
+		int resultCount = memberJpaRepository.bulkAgePlus(30);
+	
+		
+		//then
+		assertThat(resultCount).isEqualTo(3);
 	}
 }
