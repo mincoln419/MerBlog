@@ -111,13 +111,14 @@ public class MemberJpaRepositoryTest {
 	@Test
 	public void bulkAgePlus_test(){
 		memberRepository.save(new Member("member1", 10, null));
-		memberRepository.save(new Member("member1", 20, null));
-		memberRepository.save(new Member("member1", 30, null));
-		memberRepository.save(new Member("member1", 40, null));
-		memberRepository.save(new Member("member1", 50, null));
+		memberRepository.save(new Member("member2", 20, null));
+		memberRepository.save(new Member("member3", 30, null));
+		memberRepository.save(new Member("member4", 40, null));
+		memberRepository.save(new Member("member5", 50, null));
 		
 		int resultCount = memberRepository.bulkAgePlus(30);
-	
+		em.flush();
+		em.clear();//벌크연산한 후 영속성 컨텍스트 clear해야함
 		
 		List<Member> result = memberRepository.findByName("member5");
 		Member member5 = result.get(0);;
