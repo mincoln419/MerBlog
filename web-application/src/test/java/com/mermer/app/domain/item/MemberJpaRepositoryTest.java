@@ -119,6 +119,9 @@ public class MemberJpaRepositoryTest {
 		int resultCount = memberRepository.bulkAgePlus(30);
 	
 		
+		List<Member> result = memberRepository.findByName("member5");
+		Member member5 = result.get(0);;
+		System.out.println("member5 = "+ member5);
 		//then
 		assertThat(resultCount).isEqualTo(3);
 	}
