@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -44,7 +45,15 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 	@Query(value = "select m from Member m left join m.team", countQuery="select count(m) from Member m" )
 	public Page<Member> findByAge_new(int age, Pageable pageable);
 	
-	@Modifying
+	@Modifying(clearAutomatically = true)
 	@Query("update Member m set m.age = m.age + 1 where m.age >= :age")
 	int bulkAgePlus(@Param("age") int age);
+
+	//fetch조인을 사용하려 query 를 사용하는 방법으로 가능 -> spring-data-jpa의 entity Graph 로 처리가능
+	@Query("select m from Member m left join fetch m.team")
+	public List<Member> findMemberFetchJoin();
+	
+	@Override
+	@EntityGraph(attributePaths = {"team"})
+	List<Member> findAll();
 }
