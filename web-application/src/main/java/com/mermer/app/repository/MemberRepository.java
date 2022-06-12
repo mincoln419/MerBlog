@@ -19,7 +19,7 @@ import org.springframework.data.repository.query.Param;
 import com.mermer.app.domain.Member;
 import com.mermer.app.domain.MemberDto;
 
-public interface MemberRepository extends JpaRepository<Member, Long>{
+public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
 
 	public List<Member> findByName(String name);
 
