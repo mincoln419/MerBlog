@@ -15,4 +15,10 @@ public class MemberDto {
 		this.teamName = teamName;
 	}
 
+	public MemberDto(Member member) {
+		this.id = member.getId();
+		this.userName = member.getName();
+		this.teamName = member.getTeam() == null ? null : member.getTeam().getName();
+	}
+	
 }
