@@ -204,7 +204,7 @@ public class MemberJpaRepositoryTest {
 		//Given
 		Member member = new Member("member1");
 		memberRepository.save(member);//@PrePersist 수행시점
-		
+		System.out.println(member.getUpdatedBy());
 		Thread.sleep(3300);
 		member.setName("memgber2");
 		
@@ -215,7 +215,9 @@ public class MemberJpaRepositoryTest {
 		Member findMember = memberRepository.findById(member.getId()).get();
 		
 		//then
-		System.out.println(findMember.getCreateDate());
-		System.out.println(findMember.getUpdateDate());
+		System.out.println(findMember.getCreate_at());
+		System.out.println(findMember.getCreatedBy());
+		System.out.println(findMember.getUpdate_at());
+		System.out.println(findMember.getUpdatedBy());
 	}
 }
