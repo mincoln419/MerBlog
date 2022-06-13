@@ -13,6 +13,8 @@ import javax.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.test.annotation.Rollback;
 
 import com.mermer.app.domain.Member;
@@ -20,7 +22,9 @@ import com.mermer.app.domain.MemberDto;
 import com.mermer.app.domain.Team;
 import com.mermer.app.repository.MemberJpaRepository;
 import com.mermer.app.repository.MemberRepository;
+import com.mermer.app.repository.NestClosedProjections;
 import com.mermer.app.repository.TeamJpaRepository;
+import com.mermer.app.repository.UsernameOnly;
 
 @SpringBootTest
 @Transactional
@@ -224,4 +228,54 @@ class MemberTest {
 		//then
 		assertThat(resultCount).isEqualTo(3);
 	}
+	
+	@Test
+	public void queryByExample() {
+		//Given
+		Team teamA = new Team("teamA");
+		em.persist(teamA);
+		
+		Member m1 = new Member("m1",0, teamA);
+		Member m2 = new Member("m2",0, teamA);
+		em.persist(m1);
+		em.persist(m2);
+		
+		em.flush();
+		em.clear();
+		
+		//when
+		//Probe
+		Member member = new Member("m1");
+		member.setTeam(teamA);
+		
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withIgnorePaths("age");
+		
+		Example<Member> example = Example.of(member, matcher);
+		
+		List<Member> result = memberRepository.findAll(example);
+		
+		assertThat(result.size()).isEqualTo(1);
+	}
+	
+	@Test
+	public void test_projections() {
+		//Given
+		Team teamA = new Team("teamA");
+		em.persist(teamA);
+		
+		Member m1 = new Member("m1",0, teamA);
+		Member m2 = new Member("m2",0, teamA);
+		em.persist(m1);
+		em.persist(m2);
+		
+		em.flush();
+		em.clear();
+		memberRepository.findProjectionsByName("m1", NestClosedProjections.class).forEach(m -> {
+			System.out.println(m);
+			System.out.println(m.getName());
+			System.out.println(m.getTeam());
+		});
+	}
+	
 }

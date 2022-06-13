@@ -24,9 +24,6 @@ import lombok.Data;
 @Entity
 public class Book extends Item{
 
-	public Book(String i) {
-		super();
-	}
 	private String author;	
 	private String isbn;
 }
