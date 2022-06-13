@@ -19,7 +19,7 @@ import org.springframework.data.repository.query.Param;
 import com.mermer.app.domain.Member;
 import com.mermer.app.domain.MemberDto;
 
-public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
+public interface MemberRepository<MemberProjection> extends JpaRepository<Member, Long>, MemberRepositoryCustom {
 
 	public List<Member> findByName(String name);
 
@@ -68,5 +68,12 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
 	@Lock(LockModeType.PESSIMISTIC_WRITE)
 	List<Member> findLockByName(String name);
 	
+	
 	<T> List<T> findProjectionsByName(@Param("name") String name, Class<T> type);
+	
+	@Query(value = "select m.member_id as id, m.name, t.name as teamName"
+			+ "from member m left join team t", 
+			countQuery = "select count(*) from member",
+			nativeQuery = true)
+	Page<MemberProjection> findByNativeProjection(Pageable pageable);
 }
