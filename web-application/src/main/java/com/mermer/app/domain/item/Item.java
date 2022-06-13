@@ -11,12 +11,14 @@
  */
 package com.mermer.app.domain.item;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -25,11 +27,17 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.BatchSize;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.domain.Persistable;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.mermer.app.domain.Category;
 import com.mermer.app.exception.NotEnoughStockException;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /* 
  * @description: 
@@ -38,13 +46,17 @@ import lombok.Data;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="dtype")
-@Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="item")
-public abstract class Item {
+@EntityListeners(AuditingEntityListener.class) 
+public abstract class Item implements Persistable<String> {
 
-	@Id @GeneratedValue
+	@Id
 	@Column(name = "item_id")
-	private Long id;
+	private String id;
+	
+	@CreatedDate
+	private LocalDateTime create_at;//id를 임의값으로 할 경우 날짜 데이터로 체크하면됨
 	
 	private String name;
 	
@@ -73,5 +85,14 @@ public abstract class Item {
 		this.stockQuantity = restStock;
 	}
 	
+	@Override
+	public String getId() {
+		return id;
+	}
 	
+	@Override
+	public boolean isNew() {
+		
+		return create_at == null;
+	}
 }
