@@ -32,7 +32,7 @@ public class ItemUpdateTest {
 		
 		
 		//TX
-		book.setName("asdfsdf");
+		//book.setName("asdfsdf");
 		
 
 		

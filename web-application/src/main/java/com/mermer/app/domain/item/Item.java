@@ -48,12 +48,13 @@ import lombok.NoArgsConstructor;
 @DiscriminatorColumn(name="dtype")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="item")
-@EntityListeners(AuditingEntityListener.class) 
-public abstract class Item implements Persistable<String> {
+@EntityListeners(AuditingEntityListener.class)
+@Data
+public abstract class Item{
 
 	@Id
 	@Column(name = "item_id")
-	private String id;
+	private Long id;
 	
 	@CreatedDate
 	private LocalDateTime create_at;//id를 임의값으로 할 경우 날짜 데이터로 체크하면됨
@@ -85,14 +86,4 @@ public abstract class Item implements Persistable<String> {
 		this.stockQuantity = restStock;
 	}
 	
-	@Override
-	public String getId() {
-		return id;
-	}
-	
-	@Override
-	public boolean isNew() {
-		
-		return create_at == null;
-	}
 }

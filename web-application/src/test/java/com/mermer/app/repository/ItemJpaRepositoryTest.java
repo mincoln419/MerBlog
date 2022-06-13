@@ -14,7 +14,8 @@ class ItemJpaRepositoryTest {
 	
 	@Test
 	void test() {
-		Book book = new Book("1");
+		Book book = new Book();
+		book.setId(1L);
 		itemJpaRepository.save(book);
 	}
 
